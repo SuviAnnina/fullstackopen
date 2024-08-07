@@ -11,17 +11,15 @@ sequenceDiagram
     Note left of server: server redirects browser to make a new http GET request
 
     browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes
-
-    Note right of browser: GET request to header's location (notes)
-    
     activate server
+    Note right of browser: GET request to header's location (notes)
     server-->>browser: HTML document
+    deactivate server
+
     Note right of browser: HTML document includes .css file and .js file which browser will also request
 
-    deactivate server
     browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
     activate server
-
     server-->>browser: the css file
     deactivate server
     
