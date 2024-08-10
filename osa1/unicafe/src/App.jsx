@@ -14,13 +14,19 @@ const Statistics = (props) => {
 
   return (
     <>
-      <p>good {props.givenFeedback.good}</p>
-      <p>neutral {props.givenFeedback.neutral}</p>
-      <p>bad {props.givenFeedback.bad}</p>
-      <p>all {props.givenFeedback.all}</p>
-      <p>average {props.givenFeedback.average()}</p>
-      <p>positive {props.givenFeedback.positive()} %</p>
+      <StatisticLine text={"good"} value={props.givenFeedback.good} />
+      <StatisticLine text={"neutral"} value={props.givenFeedback.neutral} />
+      <StatisticLine text={"bad"} value={props.givenFeedback.bad} />
+      <StatisticLine text={"all"} value={props.givenFeedback.all} />
+      <StatisticLine text={"average"} value={props.givenFeedback.average()} />
+      <StatisticLine text={"positive"} value={props.givenFeedback.positive()} sign={"%"} />
     </>
+  )
+}
+
+const StatisticLine = (props) => {
+  return (
+    <p>{props.text} {props.value} {props.sign || ''}</p>
   )
 }
 
