@@ -3,6 +3,7 @@ import { useState } from 'react'
 const Button = (props) => <button onClick={props.onClick}>{props.text}</button>
 const Anecdote = (props) => <p>{props.anecdote}</p>
 const DisplayVotes = (props) => <p>has {props.votes} votes</p>
+const Title = (props) => <h1>{props.text}</h1>
 
 const App = () => {
   const anecdotes = [
@@ -28,21 +29,42 @@ const App = () => {
     6: 0,
     7: 0
   })
+  const titles = {
+    "anecdoteDay": "Anecdote of the day",
+    "anecdoteVotes": "Anecdote with most votes"
+  }
 
   const handleVote = () => {
     setVotes({
       ...votes,
       [selected]: votes[selected] + 1
     })
-
   }
+
+  const mostVoted = () => {
+    let highestKey = 0
+    let highestValue = 0
+
+    Object.entries(votes).forEach(([key, value]) => {
+      if (value > highestValue) {
+        highestKey = key
+        highestValue = value
+      }
+    })
+    return [highestKey, highestValue]
+  }
+  let [highestVotedIndex, highestVotedValue] = mostVoted()
 
   return (
     <div>
+      <Title text={titles.anecdoteDay} />
       <Anecdote anecdote={anecdotes[selected]} />
       <DisplayVotes votes={votes[selected]} />
       <Button onClick={handleVote} text={"vote"} />
       <Button onClick={newAnecdote} text={"next anecdote"} />
+      <Title text={titles.anecdoteVotes} />
+      <Anecdote anecdote={anecdotes[highestVotedIndex]} />
+      <DisplayVotes votes={votes[highestVotedIndex]} />
     </div>
   )
 }
