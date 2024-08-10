@@ -9,6 +9,9 @@ const Display = (props) => {
       <p>good {props.givenFeedback.good}</p>
       <p>neutral {props.givenFeedback.neutral}</p>
       <p>bad {props.givenFeedback.bad}</p>
+      <p>all {props.givenFeedback.all}</p>
+      <p>average {props.givenFeedback.average()}</p>
+      <p>positive {props.givenFeedback.positive()} %</p>
     </>
   )
 }
@@ -28,10 +31,19 @@ const App = () => {
     "neutral": "neutral"
   }
 
+  const allFeedback = good + neutral + bad
+
   const givenFeedback = {
     "good": good,
     "neutral": neutral,
-    "bad": bad
+    "bad": bad,
+    "all": allFeedback,
+    "average": function () {
+      return (good - bad) / allFeedback
+    },
+    "positive": function () {
+      return (good / allFeedback) * 100
+    }
   }
 
   const handleClickGood = () => setGood(good + 1)
