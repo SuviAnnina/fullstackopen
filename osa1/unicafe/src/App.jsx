@@ -4,6 +4,14 @@ const Header = (props) => <h1>{props.title}</h1>
 const Button = (props) => <button onClick={props.onClick}>{props.text}</button>
 
 const Statistics = (props) => {
+  if (props.givenFeedback.good === 0
+    && props.givenFeedback.neutral === 0
+    && props.givenFeedback.bad === 0) {
+    return (
+      <div>No feedback given</div>
+    )
+  }
+
   return (
     <>
       <p>good {props.givenFeedback.good}</p>
