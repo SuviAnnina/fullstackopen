@@ -24,11 +24,12 @@ const Part = ({ part }) => {
   )
 }
 
-const Total = (props) => {
-  let exercises = props.exerciseAmount[0].exercises + props.exerciseAmount[1].exercises + props.exerciseAmount[2].exercises
+const Total = ({ parts }) => {
+  let exercisesArray = parts.map((exercise) => exercise.exercises)
+  let totalExercises = exercisesArray.reduce((start, value) => start + value, 0)
   return (
     <>
-      <p>Number of exercises {exercises} </p>
+      <p><b>Total number of exercises {totalExercises}</b></p>
     </>
   )
 }
@@ -39,7 +40,7 @@ const Course = ({ course }) => {
     <div>
       <Header name={course.name} />
       <Content parts={course.parts} />
-      {/* <Total exerciseAmount={course.parts} /> */}
+      <Total parts={course.parts} />
     </div>
   )
 }
@@ -63,6 +64,11 @@ const App = () => {
         name: 'State of a component',
         exercises: 14,
         id: 3
+      },
+      {
+        name: 'Redux',
+        exercises: 11,
+        id: 4
       }
     ]
   }
