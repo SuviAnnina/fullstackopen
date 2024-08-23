@@ -1,35 +1,31 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Filter from './components/Filter'
 import DisplayPersons from './components/DisplayPersons'
 import PersonForm from './components/PersonForm'
 
+import axios from 'axios'
+
+
 const App = () => {
-  const [persons, setPersons] = useState([
-    {
-      name: 'Arto Hellas',
-      id: '1',
-      number: '0401234567'
-    },
-    {
-      name: 'Ada Lovelace',
-      number: '39-44-5323523',
-      id: '2'
-    },
-    {
-      name: 'Mary Poppendick',
-      number: '39-23-6423122',
-      id: '3'
-    },
-    {
-      name: 'Dan Abramov',
-      number: '12-43-234345',
-      id: '4'
-    },
-  ])
+  const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [search, setSearch] = useState('')
   const [isFiltered, setIsFiltered] = useState(false)
+
+  const getPersonData = () => {
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        const personData = response.data
+        setPersons(personData)
+        //console.log('in getPersonData, axios: ', personData)
+      })
+  }
+
+  useEffect(getPersonData, [])
+
+  //console.log('persons state on first load: ', persons)
 
   const handleNameChange = (event) => {
     setNewName(event.target.value)
