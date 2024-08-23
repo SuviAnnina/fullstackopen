@@ -2,9 +2,7 @@ import { useEffect, useState } from 'react'
 import Filter from './components/Filter'
 import DisplayPersons from './components/DisplayPersons'
 import PersonForm from './components/PersonForm'
-
-import axios from 'axios'
-
+import personService from './services/persons'
 
 const App = () => {
   const [persons, setPersons] = useState([])
@@ -14,18 +12,14 @@ const App = () => {
   const [isFiltered, setIsFiltered] = useState(false)
 
   const getPersonData = () => {
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        const personData = response.data
+    personService
+      .getAll()
+      .then(personData => {
         setPersons(personData)
-        //console.log('in getPersonData, axios: ', personData)
       })
   }
 
   useEffect(getPersonData, [])
-
-  //console.log('persons state on first load: ', persons)
 
   const handleNameChange = (event) => {
     setNewName(event.target.value)
