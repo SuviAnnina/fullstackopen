@@ -67,6 +67,7 @@ const App = () => {
       <DisplayPersons
         isFiltered={isFiltered}
         persons={persons}
+        setPersons={setPersons}
         search={search}
       />
     </div>

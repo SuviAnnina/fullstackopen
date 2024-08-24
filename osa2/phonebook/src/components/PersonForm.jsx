@@ -13,7 +13,7 @@ const PersonForm = ({ data, persons, setPersons }) => {
         } else {
             const personObject = {
                 name: data.newName,
-                id: String(persons.length + 1),
+                //id: String(persons.length + 1),
                 number: data.newNumber
             }
             personService
