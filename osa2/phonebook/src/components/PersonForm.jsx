@@ -5,11 +5,37 @@ const nameExists = (name, persons) => {
 }
 
 const PersonForm = ({ data, persons, setPersons }) => {
+    const clearInputFields = () => {
+        data.setNewName('')
+        data.setNewNumber('')
+    }
+
     const addPerson = (event) => {
         event.preventDefault()
 
         if (nameExists(data.newName, persons)) {
-            alert(`${data.newName} is already added to phonebook`)
+            if (window.confirm(`${data.newName} is already added, replace the number with new one?`)) {
+
+                const updatePerson = persons.find(person => person.name === data.newName)
+                const updatedPersonObject = {
+                    ...updatePerson, number: data.newNumber
+                }
+
+                personService
+                    .update(updatePerson.id, updatedPersonObject)
+                    .then(returnedPerson => {
+                        setPersons(persons.map(person => person.id !== updatePerson.id ? person : returnedPerson))
+                    })
+                    .catch(error => {
+                        alert('Failed to update')
+                        console.log('Error in updating an existing person: ', error)
+                    })
+
+                clearInputFields()
+            } else {
+                clearInputFields()
+                return
+            }
         } else {
             const personObject = {
                 name: data.newName,
@@ -21,9 +47,11 @@ const PersonForm = ({ data, persons, setPersons }) => {
                 .then(returnedPerson => {
                     setPersons(persons.concat(returnedPerson))
                 })
-
-            data.setNewName('')
-            data.setNewNumber('')
+                .catch(error => {
+                    alert('Failed to add a new person to phonebook')
+                    console.log('Failed to add a new person to phonebook: ', error)
+                })
+            clearInputFields()
         }
     }
 

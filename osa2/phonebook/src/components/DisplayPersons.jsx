@@ -9,6 +9,10 @@ const DisplayPersons = ({ isFiltered, persons, setPersons, search }) => {
                 .then(() => {
                     setPersons(persons.filter(person => person.id !== id))
                 })
+                .catch(error => {
+                    alert('Failed to delete person from phonebook')
+                    console.log('Failed to delete person from phonebook: ', error)
+                })
         }
     }
 
